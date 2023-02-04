@@ -1,0 +1,15 @@
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\bin\Debug\net6.0\DummyClient.exe
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\bin\Debug\net6.0\DummyClient.deps.json
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\bin\Debug\net6.0\DummyClient.runtimeconfig.json
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\bin\Debug\net6.0\DummyClient.dll
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\bin\Debug\net6.0\DummyClient.pdb
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.csproj.AssemblyReference.cache
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.AssemblyInfoInputs.cache
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.AssemblyInfo.cs
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.csproj.CoreCompileInputs.cache
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.dll
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\refint\DummyClient.dll
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.pdb
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\DummyClient.genruntimeconfig.cache
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\DummyClient\obj\Debug\net6.0\ref\DummyClient.dll
