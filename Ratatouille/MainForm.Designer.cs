@@ -34,7 +34,7 @@
             this.ServerAddrTBox = new System.Windows.Forms.TextBox();
             this.serverConnectStartBtn = new System.Windows.Forms.Button();
             this.serverAddrLabel = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cllientConnectStartBtn = new System.Windows.Forms.Button();
@@ -42,19 +42,17 @@
             this.ClientAddrLabel = new System.Windows.Forms.Label();
             this.clientAddrLine = new System.Windows.Forms.Panel();
             this.topBarPanel = new System.Windows.Forms.Panel();
+            this.showConsoleBtn = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.miniBtn = new System.Windows.Forms.Button();
             this.exitBtn = new System.Windows.Forms.Button();
-            this.requestAlarmIcon = new System.Windows.Forms.PictureBox();
-            this.requestAlarmPanel = new System.Windows.Forms.Panel();
-            this.requestAlarmLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabControl1.SuspendLayout();
+            this.requestListPanel = new System.Windows.Forms.Panel();
+            this.requestListLabel = new System.Windows.Forms.Label();
+            this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.topBarPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.requestAlarmIcon)).BeginInit();
-            this.requestAlarmPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // serverAddrLine
@@ -106,16 +104,16 @@
             this.serverAddrLabel.TabIndex = 3;
             this.serverAddrLabel.Text = "서버 주소:";
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(7, 38);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(15);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(415, 178);
-            this.tabControl1.TabIndex = 4;
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Location = new System.Drawing.Point(7, 42);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(15);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(415, 178);
+            this.tabControl.TabIndex = 4;
             // 
             // tabPage1
             // 
@@ -137,10 +135,10 @@
             this.tabPage2.Controls.Add(this.clientAddrTBox);
             this.tabPage2.Controls.Add(this.ClientAddrLabel);
             this.tabPage2.Controls.Add(this.clientAddrLine);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(407, 152);
+            this.tabPage2.Size = new System.Drawing.Size(407, 150);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "원격제어 하기";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -200,16 +198,37 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.topBarPanel.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.topBarPanel.Controls.Add(this.showConsoleBtn);
             this.topBarPanel.Controls.Add(this.titleLabel);
             this.topBarPanel.Controls.Add(this.miniBtn);
             this.topBarPanel.Controls.Add(this.exitBtn);
             this.topBarPanel.Location = new System.Drawing.Point(-6, -3);
             this.topBarPanel.Name = "topBarPanel";
-            this.topBarPanel.Size = new System.Drawing.Size(439, 33);
+            this.topBarPanel.Size = new System.Drawing.Size(440, 37);
             this.topBarPanel.TabIndex = 6;
             this.topBarPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseDown);
             this.topBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseMove);
             this.topBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseUp);
+            // 
+            // showConsoleBtn
+            // 
+            this.showConsoleBtn.BackColor = System.Drawing.Color.White;
+            this.showConsoleBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("showConsoleBtn.BackgroundImage")));
+            this.showConsoleBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.showConsoleBtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.showConsoleBtn.FlatAppearance.BorderSize = 2;
+            this.showConsoleBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightBlue;
+            this.showConsoleBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.showConsoleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showConsoleBtn.Font = new System.Drawing.Font("Neo둥근모 Pro", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.showConsoleBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.showConsoleBtn.Location = new System.Drawing.Point(293, 7);
+            this.showConsoleBtn.Name = "showConsoleBtn";
+            this.showConsoleBtn.Size = new System.Drawing.Size(75, 23);
+            this.showConsoleBtn.TabIndex = 9;
+            this.showConsoleBtn.Text = "Console";
+            this.showConsoleBtn.UseVisualStyleBackColor = false;
+            this.showConsoleBtn.Click += new System.EventHandler(this.showConsoleBtn_Click);
             // 
             // titleLabel
             // 
@@ -243,62 +262,51 @@
             this.exitBtn.UseVisualStyleBackColor = true;
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
-            // requestAlarmIcon
+            // requestListPanel
             // 
-            this.requestAlarmIcon.BackColor = System.Drawing.Color.Transparent;
-            this.requestAlarmIcon.Image = ((System.Drawing.Image)(resources.GetObject("requestAlarmIcon.Image")));
-            this.requestAlarmIcon.InitialImage = null;
-            this.requestAlarmIcon.Location = new System.Drawing.Point(3, 0);
-            this.requestAlarmIcon.Name = "requestAlarmIcon";
-            this.requestAlarmIcon.Size = new System.Drawing.Size(20, 20);
-            this.requestAlarmIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.requestAlarmIcon.TabIndex = 7;
-            this.requestAlarmIcon.TabStop = false;
+            this.requestListPanel.AutoScroll = true;
+            this.requestListPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.requestListPanel.Location = new System.Drawing.Point(9, 264);
+            this.requestListPanel.Name = "requestListPanel";
+            this.requestListPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.requestListPanel.Size = new System.Drawing.Size(413, 195);
+            this.requestListPanel.TabIndex = 9;
             // 
-            // requestAlarmPanel
+            // requestListLabel
             // 
-            this.requestAlarmPanel.Controls.Add(this.requestAlarmLabel);
-            this.requestAlarmPanel.Controls.Add(this.requestAlarmIcon);
-            this.requestAlarmPanel.Location = new System.Drawing.Point(188, 33);
-            this.requestAlarmPanel.Name = "requestAlarmPanel";
-            this.requestAlarmPanel.Size = new System.Drawing.Size(234, 21);
-            this.requestAlarmPanel.TabIndex = 8;
-            this.requestAlarmPanel.Visible = false;
-            // 
-            // requestAlarmLabel
-            // 
-            this.requestAlarmLabel.AutoSize = true;
-            this.requestAlarmLabel.Location = new System.Drawing.Point(29, 5);
-            this.requestAlarmLabel.Name = "requestAlarmLabel";
-            this.requestAlarmLabel.Size = new System.Drawing.Size(173, 12);
-            this.requestAlarmLabel.TabIndex = 8;
-            this.requestAlarmLabel.Text = "원격제어 요청이 들어왔습니다!";
+            this.requestListLabel.AutoSize = true;
+            this.requestListLabel.Font = new System.Drawing.Font("Neo둥근모 Pro", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.requestListLabel.ForeColor = System.Drawing.Color.White;
+            this.requestListLabel.Location = new System.Drawing.Point(7, 235);
+            this.requestListLabel.Name = "requestListLabel";
+            this.requestListLabel.Size = new System.Drawing.Size(218, 24);
+            this.requestListLabel.TabIndex = 10;
+            this.requestListLabel.Text = "원격제어 요청 목록";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(429, 240);
-            this.Controls.Add(this.requestAlarmPanel);
+            this.ClientSize = new System.Drawing.Size(430, 480);
+            this.Controls.Add(this.requestListLabel);
+            this.Controls.Add(this.requestListPanel);
             this.Controls.Add(this.topBarPanel);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Neo둥근모 Pro", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Text = "Ratatouille";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.topBarPanel.ResumeLayout(false);
             this.topBarPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.requestAlarmIcon)).EndInit();
-            this.requestAlarmPanel.ResumeLayout(false);
-            this.requestAlarmPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -309,7 +317,7 @@
         private TextBox ServerAddrTBox;
         private Button serverConnectStartBtn;
         private Label serverAddrLabel;
-        private TabControl tabControl1;
+        private TabControl tabControl;
         private TabPage tabPage1;
         private TabPage tabPage2;
         private Button cllientConnectStartBtn;
@@ -319,9 +327,9 @@
         private Button exitBtn;
         private Button miniBtn;
         private Label titleLabel;
-        private PictureBox requestAlarmIcon;
-        private Panel requestAlarmPanel;
-        private Label requestAlarmLabel;
         private System.Windows.Forms.Timer timer1;
+        private Button showConsoleBtn;
+        public Panel requestListPanel;
+        private Label requestListLabel;
     }
 }

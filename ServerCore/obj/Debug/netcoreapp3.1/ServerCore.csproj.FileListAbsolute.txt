@@ -1,0 +1,10 @@
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.AssemblyReference.cache
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\hoo\Desktop\Ratatouille\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb

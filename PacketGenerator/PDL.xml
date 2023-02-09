@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PDL>
+	<packet name="C_ConnectReq">
+		<string name="address"/>
+	</packet>
+	<packet name="S_ConnectRes">
+		<bool name="condition"/>
+	</packet>
+	<packet name="C_ScreenImage">
+		<byteArray name="bmp"/>
+	</packet>
+	<packet name="S_MouseClick">
+		<float name="posx"/>
+		<float name="posy"/>
+	</packet>
+</PDL>
