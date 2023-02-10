@@ -22,10 +22,12 @@ class ClientPacketManager
 		
 	public void Register()
 	{
-		_onRecv.Add((ushort)PacketID.S_ConnectRes, MakePacket<S_ConnectRes>);
-		_handler.Add((ushort)PacketID.S_ConnectRes, PacketHandler.S_ConnectResHandler);
+		_onRecv.Add((ushort)PacketID.S_MouseMove, MakePacket<S_MouseMove>);
+		_handler.Add((ushort)PacketID.S_MouseMove, PacketHandler.S_MouseMoveHandler);
 		_onRecv.Add((ushort)PacketID.S_MouseClick, MakePacket<S_MouseClick>);
 		_handler.Add((ushort)PacketID.S_MouseClick, PacketHandler.S_MouseClickHandler);
+		_onRecv.Add((ushort)PacketID.S_Keyboard, MakePacket<S_Keyboard>);
+		_handler.Add((ushort)PacketID.S_Keyboard, PacketHandler.S_KeyboardHandler);
 
 	}
 

@@ -5,11 +5,41 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
 public static class Util
 {
+
+    #region IP 관련 유틸함수 IsTcpPortAvailable , GetExterbalIPAddress
+    public static bool IsTcpPortAvailable(int tcpPort) // 포트가 사용가능하면 true
+    {
+        var ipgp = IPGlobalProperties.GetIPGlobalProperties();
+
+        // Check ActiveConnection ports
+        TcpConnectionInformation[] conns = ipgp.GetActiveTcpConnections();
+        foreach (var cn in conns)
+        {
+            if (cn.LocalEndPoint.Port == tcpPort)
+            {
+                return false;
+            }
+        }
+
+        // Check LISTENING ports
+        IPEndPoint[] endpoints = ipgp.GetActiveTcpListeners();
+        foreach (var ep in endpoints)
+        {
+            if (ep.Port == tcpPort)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
     public static string GetExternalIPAddress()
     {
         string externalip = new WebClient().DownloadString("http://ipinfo.io/ip").Trim(); //http://icanhazip.com
@@ -20,23 +50,49 @@ public static class Util
         }
 
         return externalip;
-    }
-    public static requestControl CreateRequestUI(string labelText, PacketSession session)
+    } //외부아이피
+    #endregion
+
+    public static requestControl CreateClientRequestUI(string labelText, PacketSession session)
     {
-        ClientSession cs = session as ClientSession;
         requestControl rc = new requestControl();
+
+        //OK BTN
         rc.acceptReqBtn.Click += (sender, e) =>
         {
-            System.Console.WriteLine($" Request Accept :{labelText}");
+            System.Console.WriteLine($"Client Request Accept :{labelText}");
+            rc.Parent.Controls.Remove(rc); // 버튼 폼 지우기
+
+            ClientSession cs = ClientSessionManager.Instance.Generate(); //새 클라이언트 세션 만들기
+
+            string host = Dns.GetHostName(); // ip,port 설정
+            IPHostEntry ipHost = Dns.GetHostEntry(host);
+            IPAddress ipAddr = ipHost.AddressList[1];
+            int port = 7778; 
+            while (Util.IsTcpPortAvailable(port) == false) // 포트가 사용불가능하면 포트 ++
+            {
+                port++;
+            }
+            IPEndPoint endPoint = new IPEndPoint(ipAddr, port);
+
+
+            Listener listener = new Listener();
+            listener.Init(endPoint, () =>
+            {
+                return cs;
+            });
+
+            session.Send(MakePacket.L_ClientRes(true , port)); // 상대방에게 수락 소켓 전송
+
             cs.MyClientControlForm.Show();
-            rc.Parent.Controls.Remove(rc);
-            session.Send(MakePacket.MakeS_ConnectRes(true));
         };
+
+        //CANCLE BTN
         rc.closeReqBtn.Click += (sender, e) =>
         {
-            System.Console.WriteLine($" Request Cancel :{labelText}");
+            System.Console.WriteLine($"Client Request Cancel :{labelText}");
             rc.Parent.Controls.Remove(rc);
-            session.Send(MakePacket.MakeS_ConnectRes(false));
+            session.Send(MakePacket.L_ClientRes(false, 0));
             session.Disconnect();
         };
 
@@ -44,6 +100,97 @@ public static class Util
         rc.requestAlarmLabel.Text = labelText;
 
         return rc;
+    }
+
+    public static requestControl CreateServerRequestUI(string labelText, PacketSession session)
+    {
+        requestControl rc = new requestControl();
+        //OK BTN
+        rc.acceptReqBtn.Click += (sender, e) =>
+        {
+            System.Console.WriteLine($" Server Request Accept :{labelText}");
+            rc.Parent.Controls.Remove(rc); // 버튼 폼 지우기
+
+            ServerSession ss = ServerSessionManager.Instance.Generate(); //새 서버 세션 만들기
+
+            string host = Dns.GetHostName(); // ip,port 설정
+            IPHostEntry ipHost = Dns.GetHostEntry(host);
+            IPAddress ipAddr = ipHost.AddressList[1];
+            int port = 7778;
+            while (Util.IsTcpPortAvailable(port) == false) // 포트가 사용불가능하면 포트 ++
+            {
+                port++;
+            }
+            IPEndPoint endPoint = new IPEndPoint(ipAddr, port);
+
+
+            Listener listener = new Listener();
+            listener.Init(endPoint, () =>
+            {
+                return ss;
+            });
+
+            session.Send(MakePacket.L_ServerRes(true, port)); // 상대방에게 수락 소켓 전송
+
+            ss.SetBackgroundWork();
+        };
+
+        //CANCLE BTN
+        rc.closeReqBtn.Click += (sender, e) =>
+        {
+            System.Console.WriteLine($"Server Request Cancel :{labelText}");
+            rc.Parent.Controls.Remove(rc);
+            session.Send(MakePacket.L_ClientRes(false, 0));
+            session.Disconnect();
+        };
+
+        rc.Dock = DockStyle.Top;
+        rc.requestAlarmLabel.Text = labelText;
+
+        return rc;
+    }
+
+    public static connectionControl CreateConnectionUI(string labelText, ClientSession session)
+    {
+        connectionControl control = new connectionControl();
+
+        //SHOW BTN
+        control.showControlFormBtn.Click += (sender, e) =>
+        {
+            session.MyClientControlForm.Visible = !session.MyClientControlForm.Visible;
+        };
+        
+
+        //CANCLE BTN
+        control.closeConnectBtn.Click += (sender, e) =>
+        {
+            session.Disconnect();
+            control.Parent.Controls.Remove(control);
+        };
+
+        control.Dock = DockStyle.Top;
+        control.NameLabel.Text = labelText;
+
+        return control;
+    }
+    public static connectionControl CreateConnectionUI(string labelText, ServerSession session)
+    {
+        connectionControl control = new connectionControl();
+
+        //SHOW BTN
+        control.showControlFormBtn.Visible = false;
+
+        //CANCLE BTN
+        control.closeConnectBtn.Click += (sender, e) =>
+        {
+            session.Disconnect();
+            control.Parent.Controls.Remove(control);
+        };
+
+        control.Dock = DockStyle.Top;
+        control.NameLabel.Text = labelText;
+
+        return control;
     }
 
 

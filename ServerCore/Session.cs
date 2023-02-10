@@ -43,6 +43,11 @@ namespace ServerCore
 	public abstract class Session
 	{
 		Socket _socket;
+		public Socket Socket
+		{
+			get { return _socket; }
+			set { _socket = value; }
+		}
 		protected int _disconnected = 0;
 
 		RecvBuffer _recvBuffer = new RecvBuffer(1024*1000);
@@ -70,7 +75,6 @@ namespace ServerCore
 		public void Start(Socket socket)
 		{
 			_socket = socket;
-
 			_recvArgs.Completed += new EventHandler<SocketAsyncEventArgs>(OnRecvCompleted);
 			_sendArgs.Completed += new EventHandler<SocketAsyncEventArgs>(OnSendCompleted);
 

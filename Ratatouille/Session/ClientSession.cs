@@ -10,7 +10,11 @@ namespace Ratatouille
     public class ClientSession : PacketSession
     {
         public ClientControlForm MyClientControlForm = new ClientControlForm();
-
+        public void ShowControlForm()
+        {
+            if(MyClientControlForm == null) MyClientControlForm = new ClientControlForm();
+            MyClientControlForm.Show();
+        }
         int _sessionId = 0;
         public int SessionId { 
             get
@@ -20,6 +24,7 @@ namespace Ratatouille
             set 
             {
                 MyClientControlForm.Text = value.ToString();
+                MyClientControlForm.titleLabel.Text = value.ToString();
                 MyClientControlForm.MySession = this;
                 _sessionId = value;
             }
@@ -39,7 +44,7 @@ namespace Ratatouille
         }
         public override void OnDisconnected(EndPoint endPoint)
         {
-            C_SessionManager.Instance.Remove(this);
+            ClientSessionManager.Instance.Remove(this);
 
             System.Console.WriteLine($"OnDisconnected :{endPoint}");
         }

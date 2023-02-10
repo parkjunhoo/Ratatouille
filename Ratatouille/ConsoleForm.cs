@@ -89,9 +89,9 @@ namespace Ratatouille
 
                 switch (_commandText)
                 {
-                    case "hi":
+                    case "sessionCount":
                         {
-                            res = "hello";
+                            res = $"ServerSession:{ServerSessionManager.Instance._sessions.Count} \r\n ClientSession: {ClientSessionManager.Instance._sessions.Count}";
                             break;
                         }
 

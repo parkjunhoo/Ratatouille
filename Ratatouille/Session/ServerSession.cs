@@ -4,9 +4,24 @@ using System.Text;
 using System.Net;
 using ServerCore;
 using System.ComponentModel;
+using Ratatouille;
 
-class ServerSession : PacketSession
+public class ServerSession : PacketSession
 {
+
+    int _sessionId = 0;
+    public int SessionId
+    {
+        get
+        {
+            return _sessionId;
+        }
+        set
+        {
+            _sessionId = value;
+        }
+    }
+
     Task t;
     public void SetBackgroundWork()
     {
@@ -15,12 +30,12 @@ class ServerSession : PacketSession
     }
     void SendScreen()
     {
+        Thread.Sleep(2000);
         while (_disconnected != 1)
         {
-            ArraySegment<byte> pkt = MakePacket.MakeC_ScreenImage();
+            ArraySegment<byte> pkt = MakePacket.C_ScreenImage();
             Send(pkt);
             Thread.Sleep(100);
-            
         }
     }
 
@@ -32,6 +47,7 @@ class ServerSession : PacketSession
 
     public override void OnDisconnected(EndPoint endPoint)
     {
+        ServerSessionManager.Instance.Remove(this);
         Console.WriteLine($"OnDisconnected :{endPoint}");
     }
 

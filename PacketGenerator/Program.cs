@@ -12,6 +12,7 @@ namespace PacketGenerator
 
         static string clientRegister;
         static string serverRegister;
+        static string listenRegister;
 
         static void Main(string[] args)
         {
@@ -43,6 +44,8 @@ namespace PacketGenerator
                 File.WriteAllText("ClientPacketManager.cs", clientManagerText);
                 string serverManagerText = string.Format(PacketFormat.managerFormat, serverRegister,"Server");
                 File.WriteAllText("ServerPacketManager.cs", serverManagerText);
+                string listenManagerText = string.Format(PacketFormat.managerFormat, listenRegister, "Listen");
+                File.WriteAllText("ListenPacketManager.cs", listenManagerText);
             }
         }
 
@@ -68,10 +71,21 @@ namespace PacketGenerator
             genPackets += string.Format(PacketFormat.packetFormat, packetName, t.Item1, t.Item2, t.Item3, t.Item4);
             packetEnums += string.Format(PacketFormat.packetEnumFormat, packetName, ++packetId) + Environment.NewLine + "\t";
 
-            if (packetName.StartsWith("S_") || packetName.StartsWith("s_"))
-                clientRegister += string.Format(PacketFormat.managerRegisterFormat, packetName) + Environment.NewLine;
-            else
-                serverRegister += string.Format(PacketFormat.managerRegisterFormat, packetName) + Environment.NewLine;
+            switch (packetName.Substring(0, 2))
+            {
+                case "S_":
+                    clientRegister += string.Format(PacketFormat.managerRegisterFormat, packetName) + Environment.NewLine;
+                    break;
+
+                case "C_":
+                    serverRegister += string.Format(PacketFormat.managerRegisterFormat, packetName) + Environment.NewLine;
+                    break;
+
+                case "L_":
+                    listenRegister += string.Format(PacketFormat.managerRegisterFormat, packetName) + Environment.NewLine;
+                    break;
+            }
+                
         }
 
         // {1} 멤버 변수들
@@ -126,6 +140,7 @@ namespace PacketGenerator
                     case "short":
                     case "ushort":
                     case "int":
+                    case "uint":
                     case "long":
                     case "float":
                     case "double":
@@ -197,6 +212,8 @@ namespace PacketGenerator
                     return "ToInt16";
                 case "ushort":
                     return "ToUInt16";
+                case "uint":
+                    return "ToUInt32";
                 case "int":
                     return "ToInt32";
                 case "long":
@@ -221,6 +238,8 @@ namespace PacketGenerator
                 case "short":
                     return "4096";
                 case "ushort":
+                    return "4096";
+                case "uint":
                     return "4096";
                 case "int":
                     return "4096";

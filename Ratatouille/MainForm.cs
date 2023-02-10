@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using ServerCore;
 
@@ -28,22 +29,20 @@ namespace Ratatouille
             IPAddress ipAddr = ipHost.AddressList[1];
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
-            //소켓 생성
-            Socket listenSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             _listener.Init(endPoint, () =>
             {
-                return C_SessionManager.Instance.Generate();
+                return new ListenSession();
             });
 
-            System.Console.WriteLine($"Listening... On {Util.GetExternalIPAddress()}");
+            System.Console.WriteLine($"ListenSession : Listening... On {Util.GetExternalIPAddress()}");
         }
 
 
 
         private void serverConnectStartBtn_Click(object sender, EventArgs e) // 원격제어 요청하기
         {
-            ServerSession session = new ServerSession();
+            ListenSession session = new ListenSession();
             try
             {
                 IPAddress ipAddr = IPAddress.Parse(ServerAddrTBox.Text);
@@ -61,15 +60,15 @@ namespace Ratatouille
                 MessageBox.Show(ex.ToString());
             }
 
-            session.Send(MakePacket.MakeC_ConnectReq(Util.GetExternalIPAddress()));
+            session.Send(MakePacket.L_ClientReq(Util.GetExternalIPAddress()));
         }
 
         private void cllientConnectStartBtn_Click(object sender, EventArgs e) //원격제어 시작하기
         {
-            ClientSession session = new ClientSession();
+            ListenSession session = new ListenSession();
             try
             {
-                IPAddress ipAddr = IPAddress.Parse(ServerAddrTBox.Text);
+                IPAddress ipAddr = IPAddress.Parse(clientAddrTBox.Text);
 
                 IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
@@ -84,7 +83,7 @@ namespace Ratatouille
                 MessageBox.Show(ex.ToString());
             }
 
-            session.Send(MakePacket.MakeC_ConnectReq(Util.GetExternalIPAddress()));
+            session.Send(MakePacket.L_ServerReq(Util.GetExternalIPAddress()));
         }
 
         private void showConsoleBtn_Click(object sender, EventArgs e)
@@ -160,14 +159,47 @@ namespace Ratatouille
         //TopBarEventHandler
         #endregion
 
-        private void acceptReqBtn_Click(object sender, EventArgs e)
+        public void RefreshConnectList()
         {
+            for (int i = 0; i < this.connectionListPanel.Controls.Count; i++)
+            {
+                if (this.connectionListPanel.InvokeRequired)
+                {
+                    this.connectionListPanel.Invoke(new MethodInvoker(delegate ()
+                    {
+                        connectionListPanel.Controls.RemoveAt(i);
+                    }));
+                }
+            }
 
-        }
-
-        private void closeReqBtn_Click(object sender, EventArgs e)
-        {
-
+            foreach (var session in ClientSessionManager.Instance._sessions)
+            {
+                if (this.connectionListPanel.InvokeRequired)
+                {
+                    this.connectionListPanel.Invoke(new MethodInvoker(delegate ()
+                    {
+                        this.connectionListPanel.Controls.Add(Util.CreateConnectionUI(session.Key.ToString(), session.Value));
+                    }));
+                }
+                else
+                {
+                    this.connectionListPanel.Controls.Add(Util.CreateConnectionUI(session.Key.ToString(), session.Value));
+                }
+            }
+            foreach (var session in ServerSessionManager.Instance._sessions)
+            {
+                if (this.connectionListPanel.InvokeRequired)
+                {
+                    this.connectionListPanel.Invoke(new MethodInvoker(delegate ()
+                    {
+                        this.connectionListPanel.Controls.Add(Util.CreateConnectionUI(session.Key.ToString(), session.Value));
+                    }));
+                }
+                else
+                {
+                    this.connectionListPanel.Controls.Add(Util.CreateConnectionUI(session.Key.ToString(), session.Value));
+                }
+            }
         }
     }
 }

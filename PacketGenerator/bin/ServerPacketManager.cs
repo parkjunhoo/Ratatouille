@@ -22,8 +22,6 @@ class ServerPacketManager
 		
 	public void Register()
 	{
-		_onRecv.Add((ushort)PacketID.C_ConnectReq, MakePacket<C_ConnectReq>);
-		_handler.Add((ushort)PacketID.C_ConnectReq, PacketHandler.C_ConnectReqHandler);
 		_onRecv.Add((ushort)PacketID.C_ScreenImage, MakePacket<C_ScreenImage>);
 		_handler.Add((ushort)PacketID.C_ScreenImage, PacketHandler.C_ScreenImageHandler);
 

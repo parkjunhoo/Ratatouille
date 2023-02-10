@@ -41,3 +41,4 @@ C:\Users\hoo\Desktop\Ratatouille\Ratatouille\obj\Debug\net6.0-windows\Ratatouill
 C:\Users\hoo\Desktop\Ratatouille\Ratatouille\obj\Debug\net6.0-windows\Ratatouille.MainForm.resources
 C:\Users\hoo\Desktop\Ratatouille\Ratatouille\obj\Debug\net6.0-windows\Ratatouille.requestControl.resources
 C:\Users\hoo\Desktop\Ratatouille\Ratatouille\obj\Debug\net6.0-windows\Ratatouille.ClientControlForm.resources
+C:\Users\hoo\Desktop\Ratatouille\Ratatouille\obj\Debug\net6.0-windows\Ratatouille.connectionControl.resources

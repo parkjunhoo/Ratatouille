@@ -1,16 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PDL>
-	<packet name="C_ConnectReq">
+	<packet name="L_ClientReq">
 		<string name="address"/>
 	</packet>
-	<packet name="S_ConnectRes">
+	<packet name="L_ClientRes">
 		<bool name="condition"/>
+		<int name="port"/>
+	</packet>
+		<packet name="L_ServerReq">
+		<string name="address"/>
+	</packet>
+	<packet name="L_ServerRes">
+		<bool name="condition"/>
+		<int name="port"/>
 	</packet>
 	<packet name="C_ScreenImage">
 		<byteArray name="bmp"/>
 	</packet>
+	<packet name="S_MouseMove">
+		<short name="posx"/>
+		<short name="posy"/>
+	</packet>
 	<packet name="S_MouseClick">
-		<float name="posx"/>
-		<float name="posy"/>
+		<uint name="flag"/>
+	</packet>
+	<packet name="S_Keyboard">
+		<uint name="flag"/>
+		<byte name="keycode"/>
 	</packet>
 </PDL>

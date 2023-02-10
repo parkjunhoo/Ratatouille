@@ -6,22 +6,39 @@ using System.Threading.Tasks;
 
 public static class MakePacket
 {
-    public static ArraySegment<byte> MakeC_ConnectReq(string address)
+    public static ArraySegment<byte> L_ClientReq (string address)
     {
-        C_ConnectReq packet = new C_ConnectReq();
+        L_ClientReq packet = new L_ClientReq();
         packet.address = address;
         ArraySegment<byte> segment = packet.Write();
         return segment;
     }
-    public static ArraySegment<byte> MakeS_ConnectRes(bool condition)
+    public static ArraySegment<byte> L_ClientRes(bool condition, int port)
     {
-        S_ConnectRes packet = new S_ConnectRes();
+        L_ClientRes packet = new L_ClientRes();
         packet.condition = condition;
+        packet.port = port;
         ArraySegment<byte> segment = packet.Write();
         return segment;
     }
 
-    public static ArraySegment<byte> MakeC_ScreenImage()
+    public static ArraySegment<byte> L_ServerReq(string address)
+    {
+        L_ServerReq packet = new L_ServerReq();
+        packet.address = address;
+        ArraySegment<byte> segment = packet.Write();
+        return segment;
+    }
+    public static ArraySegment<byte> L_ServerRes(bool condition, int port)
+    {
+        L_ServerRes packet = new L_ServerRes();
+        packet.condition = condition;
+        packet.port = port;
+        ArraySegment<byte> segment = packet.Write();
+        return segment;
+    }
+
+    public static ArraySegment<byte> C_ScreenImage()
     {
         C_ScreenImage packet = new C_ScreenImage();
         packet.bmp = Util.ScreenToByte();
@@ -29,11 +46,28 @@ public static class MakePacket
         return segment;
     }
 
-    public static ArraySegment<byte> MakeS_MouseClick(float x , float y)
+    public static ArraySegment<byte> S_MouseMove(short x , short y)
     {
-        S_MouseClick packet = new S_MouseClick();
+        S_MouseMove packet = new S_MouseMove();
         packet.posx = x;
         packet.posy = y;
+        ArraySegment<byte> segment = packet.Write();
+        return segment;
+    }
+
+    public static ArraySegment<byte> S_MouseClick(uint flag)
+    {
+        S_MouseClick packet = new S_MouseClick();
+        packet.flag = flag;
+        ArraySegment<byte> segment = packet.Write();
+        return segment;
+    }
+
+    public static ArraySegment<byte> S_Keyboard(uint flag , byte keycode)
+    {
+        S_Keyboard packet = new S_Keyboard();
+        packet.flag = flag;
+        packet.keycode = keycode;
         ArraySegment<byte> segment = packet.Write();
         return segment;
     }
