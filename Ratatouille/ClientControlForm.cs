@@ -100,7 +100,7 @@ namespace Ratatouille
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            //MySession.Send(MakePacket.S_Keyboard(0x00, (byte)keyData));
+            clientScreenPbox.Focus();
             return false;
         }
         private void clientScreenPbox_event_KeyDown(object sender , KeyEventArgs e)
