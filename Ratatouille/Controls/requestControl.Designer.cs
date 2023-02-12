@@ -57,6 +57,7 @@
             this.acceptReqBtn.Name = "acceptReqBtn";
             this.acceptReqBtn.Size = new System.Drawing.Size(30, 30);
             this.acceptReqBtn.TabIndex = 10;
+            this.acceptReqBtn.TabStop = false;
             this.acceptReqBtn.Text = "✔";
             this.acceptReqBtn.UseVisualStyleBackColor = false;
             // 
@@ -72,6 +73,7 @@
             this.closeReqBtn.Name = "closeReqBtn";
             this.closeReqBtn.Size = new System.Drawing.Size(30, 30);
             this.closeReqBtn.TabIndex = 11;
+            this.closeReqBtn.TabStop = false;
             this.closeReqBtn.Text = "✖";
             this.closeReqBtn.UseVisualStyleBackColor = false;
             // 

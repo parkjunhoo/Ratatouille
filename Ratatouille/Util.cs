@@ -84,7 +84,6 @@ public static class Util
 
             session.Send(MakePacket.L_ClientRes(true , port)); // 상대방에게 수락 소켓 전송
 
-            cs.MyClientControlForm.Show();
         };
 
         //CANCLE BTN
@@ -131,8 +130,6 @@ public static class Util
             });
 
             session.Send(MakePacket.L_ServerRes(true, port)); // 상대방에게 수락 소켓 전송
-
-            ss.SetBackgroundWork();
         };
 
         //CANCLE BTN
@@ -157,7 +154,18 @@ public static class Util
         //SHOW BTN
         control.showControlFormBtn.Click += (sender, e) =>
         {
-            session.MyClientControlForm.Visible = !session.MyClientControlForm.Visible;
+            control.dummyBtn.Focus();
+            if (session.MyClientControlForm.InvokeRequired)
+            {
+                session.MyClientControlForm.Invoke(new MethodInvoker(delegate ()
+                {
+                    session.MyClientControlForm.Visible = !session.MyClientControlForm.Visible;
+                }));
+            }
+            else
+            {
+                session.MyClientControlForm.Visible = !session.MyClientControlForm.Visible;
+            }
         };
         
 

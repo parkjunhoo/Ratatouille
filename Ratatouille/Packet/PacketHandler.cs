@@ -53,8 +53,8 @@ class PacketHandler
             session.Disconnect();
         }
 
-        string message = conResPacket.condition ? "원격 컨트롤이 시작됬습니다." : "클라이언트 요청이 거절됬습니다.";
-        MessageBox.Show(message, "Alarm");
+        //string message = conResPacket.condition ? "원격 컨트롤이 시작됬습니다." : "클라이언트 요청이 거절됬습니다.";
+        //MessageBox.Show(message, "Alarm");
         
     }
 
@@ -94,12 +94,11 @@ class PacketHandler
             {
                 MessageBox.Show(ex.ToString());
             }
-            cs.MyClientControlForm.ShowDialog();
             session.Disconnect();
         }
 
-        string message = conResPacket.condition ? "원격 컨트롤을 시작됬습니다." : "서버 요청이 거절됬습니다.";
-        MessageBox.Show(message, "Alarm");
+        //string message = conResPacket.condition ? "원격 컨트롤을 시작했습니다." : "서버 요청이 거절됬습니다.";
+        //MessageBox.Show(message, "Alarm");
     }
 
 
@@ -136,8 +135,6 @@ class PacketHandler
     {
         S_Keyboard pkt = packet as S_Keyboard;
         keybd_event(pkt.keycode,0, pkt.flag , 0);
-        Console.WriteLine($"keycode:{pkt.keycode}");
-        Console.WriteLine($"flag:{pkt.flag}");
 
     }
 }

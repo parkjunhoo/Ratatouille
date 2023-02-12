@@ -51,6 +51,8 @@
             this.requestListLabel = new System.Windows.Forms.Label();
             this.connectionListLabel = new System.Windows.Forms.Label();
             this.connectionListPanel = new System.Windows.Forms.Panel();
+            this.serverAddrURLCBox = new System.Windows.Forms.CheckBox();
+            this.clientAddrURLCBox = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -119,6 +121,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.serverAddrURLCBox);
             this.tabPage1.Controls.Add(this.serverConnectStartBtn);
             this.tabPage1.Controls.Add(this.serverAddrLabel);
             this.tabPage1.Controls.Add(this.serverAddrLine);
@@ -133,14 +136,15 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.clientAddrURLCBox);
             this.tabPage2.Controls.Add(this.cllientConnectStartBtn);
             this.tabPage2.Controls.Add(this.clientAddrTBox);
             this.tabPage2.Controls.Add(this.ClientAddrLabel);
             this.tabPage2.Controls.Add(this.clientAddrLine);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(432, 150);
+            this.tabPage2.Size = new System.Drawing.Size(432, 152);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "원격제어 하기";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -306,6 +310,26 @@
             this.connectionListPanel.Size = new System.Drawing.Size(216, 195);
             this.connectionListPanel.TabIndex = 11;
             // 
+            // serverAddrURLCBox
+            // 
+            this.serverAddrURLCBox.AutoSize = true;
+            this.serverAddrURLCBox.Location = new System.Drawing.Point(83, 32);
+            this.serverAddrURLCBox.Name = "serverAddrURLCBox";
+            this.serverAddrURLCBox.Size = new System.Drawing.Size(70, 16);
+            this.serverAddrURLCBox.TabIndex = 4;
+            this.serverAddrURLCBox.Text = "From URL";
+            this.serverAddrURLCBox.UseVisualStyleBackColor = true;
+            // 
+            // clientAddrURLCBox
+            // 
+            this.clientAddrURLCBox.AutoSize = true;
+            this.clientAddrURLCBox.Location = new System.Drawing.Point(119, 32);
+            this.clientAddrURLCBox.Name = "clientAddrURLCBox";
+            this.clientAddrURLCBox.Size = new System.Drawing.Size(70, 16);
+            this.clientAddrURLCBox.TabIndex = 9;
+            this.clientAddrURLCBox.Text = "From URL";
+            this.clientAddrURLCBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -358,5 +382,7 @@
         private Label requestListLabel;
         private Label connectionListLabel;
         public Panel connectionListPanel;
+        private CheckBox serverAddrURLCBox;
+        private CheckBox clientAddrURLCBox;
     }
 }

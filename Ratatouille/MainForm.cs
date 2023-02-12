@@ -45,15 +45,30 @@ namespace Ratatouille
             ListenSession session = new ListenSession();
             try
             {
-                IPAddress ipAddr = IPAddress.Parse(ServerAddrTBox.Text);
-                
-                IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
-
-                Connecter connecter = new Connecter();
-                connecter.Connect(endPoint, () =>
+                if(serverAddrURLCBox.Checked)
                 {
-                    return session;
-                });
+                    IPAddress[] ip_Addresses = Dns.GetHostAddresses(ServerAddrTBox.Text);
+                    IPAddress ipAddr = ip_Addresses[0];
+                    IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+
+                    Connecter connecter = new Connecter();
+                    connecter.Connect(endPoint, () =>
+                    {
+                        return session;
+                    });
+                }
+                else
+                {
+                    IPAddress ipAddr = IPAddress.Parse(ServerAddrTBox.Text);
+
+                    IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+
+                    Connecter connecter = new Connecter();
+                    connecter.Connect(endPoint, () =>
+                    {
+                        return session;
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -68,15 +83,30 @@ namespace Ratatouille
             ListenSession session = new ListenSession();
             try
             {
-                IPAddress ipAddr = IPAddress.Parse(clientAddrTBox.Text);
-
-                IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
-
-                Connecter connecter = new Connecter();
-                connecter.Connect(endPoint, () =>
+                if (clientAddrURLCBox.Checked)
                 {
-                    return session;
-                });
+                    IPAddress[] ip_Addresses = Dns.GetHostAddresses(clientAddrTBox.Text);
+                    IPAddress ipAddr = ip_Addresses[0];
+                    IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+
+                    Connecter connecter = new Connecter();
+                    connecter.Connect(endPoint, () =>
+                    {
+                        return session;
+                    });
+                }
+                else
+                {
+                    IPAddress ipAddr = IPAddress.Parse(clientAddrTBox.Text);
+
+                    IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+
+                    Connecter connecter = new Connecter();
+                    connecter.Connect(endPoint, () =>
+                    {
+                        return session;
+                    });
+                }
             }
             catch (Exception ex)
             {

@@ -8,7 +8,6 @@ using Ratatouille;
 
 public class ServerSession : PacketSession
 {
-
     int _sessionId = 0;
     public int SessionId
     {
@@ -30,18 +29,18 @@ public class ServerSession : PacketSession
     }
     void SendScreen()
     {
-        Thread.Sleep(2000);
         while (_disconnected != 1)
         {
             ArraySegment<byte> pkt = MakePacket.C_ScreenImage();
             Send(pkt);
-            Thread.Sleep(100);
+            Thread.Sleep(1);
         }
     }
 
 
     public override void OnConnected(EndPoint endPoint)
     {
+        SetBackgroundWork();
         Console.WriteLine($"OnConnected :{endPoint}");
     }
 

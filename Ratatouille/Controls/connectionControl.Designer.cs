@@ -31,6 +31,7 @@
             this.closeConnectBtn = new System.Windows.Forms.Button();
             this.showControlFormBtn = new System.Windows.Forms.Button();
             this.NameLabel = new System.Windows.Forms.Label();
+            this.dummyBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // closeConnectBtn
@@ -46,6 +47,7 @@
             this.closeConnectBtn.Name = "closeConnectBtn";
             this.closeConnectBtn.Size = new System.Drawing.Size(30, 30);
             this.closeConnectBtn.TabIndex = 13;
+            this.closeConnectBtn.TabStop = false;
             this.closeConnectBtn.Text = "🔗";
             this.closeConnectBtn.UseVisualStyleBackColor = false;
             // 
@@ -62,6 +64,7 @@
             this.showControlFormBtn.Name = "showControlFormBtn";
             this.showControlFormBtn.Size = new System.Drawing.Size(30, 30);
             this.showControlFormBtn.TabIndex = 12;
+            this.showControlFormBtn.TabStop = false;
             this.showControlFormBtn.Text = "🖵";
             this.showControlFormBtn.UseVisualStyleBackColor = false;
             // 
@@ -77,11 +80,21 @@
             this.NameLabel.TabIndex = 14;
             this.NameLabel.Text = "Name";
             // 
+            // dummyBtn
+            // 
+            this.dummyBtn.Location = new System.Drawing.Point(-5, -5);
+            this.dummyBtn.Name = "dummyBtn";
+            this.dummyBtn.Size = new System.Drawing.Size(1, 1);
+            this.dummyBtn.TabIndex = 15;
+            this.dummyBtn.Text = "button1";
+            this.dummyBtn.UseVisualStyleBackColor = true;
+            // 
             // connectionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.dummyBtn);
             this.Controls.Add(this.NameLabel);
             this.Controls.Add(this.closeConnectBtn);
             this.Controls.Add(this.showControlFormBtn);
@@ -97,5 +110,6 @@
         public Button closeConnectBtn;
         public Button showControlFormBtn;
         public Label NameLabel;
+        public Button dummyBtn;
     }
 }

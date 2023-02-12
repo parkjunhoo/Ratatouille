@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.topBarPanel = new System.Windows.Forms.Panel();
+            this.dummyBtn = new System.Windows.Forms.Button();
             this.miniBtn = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.HideBtn = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.topBarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.topBarPanel.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.topBarPanel.Controls.Add(this.dummyBtn);
             this.topBarPanel.Controls.Add(this.miniBtn);
             this.topBarPanel.Controls.Add(this.titleLabel);
             this.topBarPanel.Controls.Add(this.HideBtn);
@@ -55,6 +57,16 @@
             this.topBarPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseDown);
             this.topBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseMove);
             this.topBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseUp);
+            // 
+            // dummyBtn
+            // 
+            this.dummyBtn.Location = new System.Drawing.Point(650, 7);
+            this.dummyBtn.Name = "dummyBtn";
+            this.dummyBtn.Size = new System.Drawing.Size(1, 1);
+            this.dummyBtn.TabIndex = 10;
+            this.dummyBtn.Text = "button1";
+            this.dummyBtn.UseVisualStyleBackColor = true;
+            this.dummyBtn.Visible = false;
             // 
             // miniBtn
             // 
@@ -128,8 +140,11 @@
             this.Controls.Add(this.sizer);
             this.Controls.Add(this.topBarPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "ClientControlForm";
             this.Text = "ClientScreenForm";
+            this.Activated += new System.EventHandler(this.ClientControlForm_Activated);
+            this.Deactivate += new System.EventHandler(this.ClientControlForm_Deactivate);
             this.Load += new System.EventHandler(this.ClientControlForm_Load);
             this.topBarPanel.ResumeLayout(false);
             this.topBarPanel.PerformLayout();
@@ -145,5 +160,6 @@
         private Panel sizer;
         public Label titleLabel;
         public PictureBox clientScreenPbox;
+        private Button dummyBtn;
     }
 }

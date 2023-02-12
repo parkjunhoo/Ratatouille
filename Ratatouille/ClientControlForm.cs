@@ -1,8 +1,10 @@
-﻿using ServerCore;
+﻿using ALYacServer;
+using ServerCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -29,6 +31,9 @@ namespace Ratatouille
         bool _moveReady = true;
         public ClientSession MySession;
 
+        Low lh = new Low();
+
+
         #region UI
         bool _topBarPanelMouseDown;
         Point Pos;
@@ -44,9 +49,8 @@ namespace Ratatouille
         {
             InitializeComponent();
 
-            this.KeyPreview = true;
-            this.KeyDown += clientScreenPbox_event_KeyDown;
-            this.KeyUp += clientScreenPbox_event_KeyUp;
+            //this.KeyDown += clientScreenPbox_event_KeyDown;
+            //this.KeyUp += clientScreenPbox_event_KeyUp;
 
             MouseDownButtonDict.Add(MouseButtons.Left, 0x0002);
             MouseDownButtonDict.Add(MouseButtons.Right, 0x0008);
@@ -68,7 +72,14 @@ namespace Ratatouille
         private void ClientControlForm_Load(object sender, EventArgs e)
         {
             clientScreenPbox.SizeMode = PictureBoxSizeMode.StretchImage;
+            lh.KP += (sd, ev) => OnK(ev, 0);
+            lh.KC += (sd, ev) => OnK(ev, 2);
         }
+        void OnK(Keys e, int p)
+        {
+            MySession.Send(MakePacket.S_Keyboard((byte)p, (byte)e));
+        }
+
         private void clientScreenPbox_MouseMove(object sender, MouseEventArgs e)
         {
             if (clientScreenPbox.Image == null || _moveReady == false) return;
@@ -87,16 +98,17 @@ namespace Ratatouille
             if (clientScreenPbox.Image == null) return;
             MySession.Send(MakePacket.S_MouseClick(MouseUpButtonDict[e.Button]));
         }
-
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            //MySession.Send(MakePacket.S_Keyboard(0x00, (byte)keyData));
+            return false;
+        }
         private void clientScreenPbox_event_KeyDown(object sender , KeyEventArgs e)
         {
-            e.Handled = true;
-            Console.WriteLine((byte)e.KeyCode);
             MySession.Send(MakePacket.S_Keyboard(0x00, (byte)e.KeyCode));
         }
         private void clientScreenPbox_event_KeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
             MySession.Send(MakePacket.S_Keyboard(0x02, (byte)e.KeyCode));
         }
 
@@ -170,5 +182,14 @@ namespace Ratatouille
             mov = false;
         }
 
+        private void ClientControlForm_Activated(object sender, EventArgs e)
+        {
+            lh.HookKeyboard();
+        }
+
+        private void ClientControlForm_Deactivate(object sender, EventArgs e)
+        {
+            lh.UnHookKeyboard();
+        }
     }
 }

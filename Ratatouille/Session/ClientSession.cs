@@ -10,11 +10,7 @@ namespace Ratatouille
     public class ClientSession : PacketSession
     {
         public ClientControlForm MyClientControlForm = new ClientControlForm();
-        public void ShowControlForm()
-        {
-            if(MyClientControlForm == null) MyClientControlForm = new ClientControlForm();
-            MyClientControlForm.Show();
-        }
+
         int _sessionId = 0;
         public int SessionId { 
             get
@@ -32,6 +28,17 @@ namespace Ratatouille
 
         public override void OnConnected(EndPoint endPoint)
         {
+            if (this.MyClientControlForm.InvokeRequired)
+            {
+                this.MyClientControlForm.Invoke(new MethodInvoker(delegate ()
+                {
+                    MyClientControlForm.ShowDialog();
+                }));
+            }
+            else
+            {
+                MyClientControlForm.ShowDialog();
+            }
             System.Console.WriteLine($"OnConnected :{endPoint}");
         }
 
