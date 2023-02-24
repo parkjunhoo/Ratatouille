@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.topBarPanel = new System.Windows.Forms.Panel();
+            this.sendSleepBtn = new System.Windows.Forms.Button();
+            this.sendSleepTbox = new System.Windows.Forms.TextBox();
             this.dummyBtn = new System.Windows.Forms.Button();
             this.miniBtn = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -44,6 +46,8 @@
             this.topBarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.topBarPanel.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.topBarPanel.Controls.Add(this.sendSleepBtn);
+            this.topBarPanel.Controls.Add(this.sendSleepTbox);
             this.topBarPanel.Controls.Add(this.dummyBtn);
             this.topBarPanel.Controls.Add(this.miniBtn);
             this.topBarPanel.Controls.Add(this.titleLabel);
@@ -53,10 +57,32 @@
             this.topBarPanel.Name = "topBarPanel";
             this.topBarPanel.Size = new System.Drawing.Size(800, 30);
             this.topBarPanel.TabIndex = 9;
+            this.topBarPanel.Click += new System.EventHandler(this.topBarPanel_Click);
             this.topBarPanel.DoubleClick += new System.EventHandler(this.topBarPanel_DoubleClick);
             this.topBarPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseDown);
             this.topBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseMove);
             this.topBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.topBarPanel_MouseUp);
+            // 
+            // sendSleepBtn
+            // 
+            this.sendSleepBtn.Location = new System.Drawing.Point(650, 5);
+            this.sendSleepBtn.Name = "sendSleepBtn";
+            this.sendSleepBtn.Size = new System.Drawing.Size(84, 23);
+            this.sendSleepBtn.TabIndex = 12;
+            this.sendSleepBtn.Text = "DelaySet";
+            this.sendSleepBtn.UseVisualStyleBackColor = true;
+            this.sendSleepBtn.Click += new System.EventHandler(this.sendSleepBtn_Click);
+            // 
+            // sendSleepTbox
+            // 
+            this.sendSleepTbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendSleepTbox.Location = new System.Drawing.Point(610, 6);
+            this.sendSleepTbox.Name = "sendSleepTbox";
+            this.sendSleepTbox.Size = new System.Drawing.Size(34, 23);
+            this.sendSleepTbox.TabIndex = 11;
+            this.sendSleepTbox.Text = "15";
+            this.sendSleepTbox.Enter += new System.EventHandler(this.sendSleepTbox_Enter);
+            this.sendSleepTbox.Leave += new System.EventHandler(this.sendSleepTbox_Leave);
             // 
             // dummyBtn
             // 
@@ -125,6 +151,7 @@
             this.clientScreenPbox.Size = new System.Drawing.Size(776, 585);
             this.clientScreenPbox.TabIndex = 11;
             this.clientScreenPbox.TabStop = false;
+            this.clientScreenPbox.Click += new System.EventHandler(this.clientScreenPbox_Click);
             this.clientScreenPbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.clientScreenPbox_MouseDown);
             this.clientScreenPbox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.clientScreenPbox_MouseMove);
             this.clientScreenPbox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.clientScreenPbox_MouseUp);
@@ -143,7 +170,6 @@
             this.KeyPreview = true;
             this.Name = "ClientControlForm";
             this.Text = "ClientScreenForm";
-            this.Activated += new System.EventHandler(this.ClientControlForm_Activated);
             this.Deactivate += new System.EventHandler(this.ClientControlForm_Deactivate);
             this.Load += new System.EventHandler(this.ClientControlForm_Load);
             this.topBarPanel.ResumeLayout(false);
@@ -161,5 +187,7 @@
         public Label titleLabel;
         public PictureBox clientScreenPbox;
         private Button dummyBtn;
+        private Button sendSleepBtn;
+        private TextBox sendSleepTbox;
     }
 }

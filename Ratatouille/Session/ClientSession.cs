@@ -28,21 +28,38 @@ namespace Ratatouille
 
         public override void OnConnected(EndPoint endPoint)
         {
+            this.MyClientControlForm.MySession = this;
             if (this.MyClientControlForm.InvokeRequired)
             {
                 this.MyClientControlForm.Invoke(new MethodInvoker(delegate ()
                 {
-                    MyClientControlForm.ShowDialog();
+                    Application.Run(this.MyClientControlForm);
                 }));
             }
             else
             {
-                MyClientControlForm.ShowDialog();
+                Application.Run(this.MyClientControlForm);
             }
-            System.Console.WriteLine($"OnConnected :{endPoint}");
+            this.Send(MakePacket.S_SendScreenSleep(150));
         }
 
+        public override void Disconnect()
+        {
+            if (this.MyClientControlForm.InvokeRequired)
+            {
+                this.MyClientControlForm.Invoke(new MethodInvoker(delegate ()
+                {
+                    this.MyClientControlForm.Close();
+                }));
+            }
+            else
+            {
+                this.MyClientControlForm.Close();
+            }
 
+            ClientSessionManager.Instance.Remove(this);
+            base.Disconnect();
+        }
 
         // [size(2) USHORT] [packetID (2)]
         public override void OnRecvPacket(ArraySegment<byte> buffer)

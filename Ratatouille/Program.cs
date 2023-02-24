@@ -8,15 +8,38 @@ namespace Ratatouille
         public static MainForm MainForm = new MainForm();
         public static ConsoleForm ConsoleForm = new ConsoleForm();
 
+        public static Low Low = new Low();
+        public static byte LeftFlag = 0;
+        public static byte RightFlag = 0;
+        public static Action<Keys, int> OnKey = null;
+
+        public static Action<object, EventArgs> OnNewFocus = null;
+
+
         [STAThread]
         static void Main()
         {
-            // override ConsoleWriteLine
+            ApplicationConfiguration.Initialize();
+
             Console.SetOut(new CWriter());
 
+            Low.KP += (sd, ev) => OnKP(ev, 0);
+            Low.KC += (sd, ev) => OnKP(ev, 2);
+            Low.HookKeyboard();
+            Low.HookMouse();
 
-            ApplicationConfiguration.Initialize();
+            
             Application.Run(MainForm);
+            Application.ApplicationExit += OnApplicationExit;
+        }
+        static void OnApplicationExit(object sender, EventArgs e)
+        {
+            Low.UnHookKeyboard();
+            Low.UnHookMouse();
+        }
+        static void OnKP(Keys e, int p)
+        {
+            if (OnKey != null) OnKey.Invoke(e, p);
         }
 
         #region override ConsoleWriteLine

@@ -23,9 +23,13 @@
 	</packet>
 	<packet name="S_MouseClick">
 		<uint name="flag"/>
+		<short name="line"/>
 	</packet>
 	<packet name="S_Keyboard">
 		<uint name="flag"/>
 		<byte name="keycode"/>
+	</packet>
+	<packet name="S_SendScreenSleep">
+		<uint name="sleepAmount"/>
 	</packet>
 </PDL>

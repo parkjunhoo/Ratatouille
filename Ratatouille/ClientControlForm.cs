@@ -1,5 +1,4 @@
-﻿using ALYacServer;
-using ServerCore;
+﻿using ServerCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -25,13 +25,19 @@ namespace Ratatouille
         //const uint LBUTTONUP = 0x0004;      // 왼쪽 마우스 버튼 떼어짐
         //const uint RBUTTONDOWN = 0x0008;    // 오른쪽 마우스 버튼 눌림
         //const uint RBUTTONUP = 0x00010;      // 오른쪽 마우스 버튼 떼어짐
+        //Middle mouse button down: 0x0020
+        //Middle mouse button up: 0x0040
 
         Dictionary<MouseButtons, uint> MouseDownButtonDict = new Dictionary<MouseButtons, uint>();
         Dictionary<MouseButtons, uint> MouseUpButtonDict = new Dictionary<MouseButtons, uint>();
+        bool _sizeSet = false;
+        public float ImageWidth = 0f;
+        public float ImageHeight = 0f;
         bool _moveReady = true;
+        bool _isTBoxTyping = false;
         public ClientSession MySession;
+        bool _isFocus = false;
 
-        Low lh = new Low();
 
 
         #region UI
@@ -44,13 +50,20 @@ namespace Ratatouille
         int Sh;
         bool mov;
         #endregion
+        public void SetImageSize(float w, float h)
+        {
+            ImageWidth = w;
+            ImageHeight = h;
+            _sizeSet = true;
+        }
 
         public ClientControlForm()
         {
             InitializeComponent();
-
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             //this.KeyDown += clientScreenPbox_event_KeyDown;
             //this.KeyUp += clientScreenPbox_event_KeyUp;
+            clientScreenPbox.MouseWheel += new MouseEventHandler(clientScreenPbox_MouseWheel);
 
             MouseDownButtonDict.Add(MouseButtons.Left, 0x0002);
             MouseDownButtonDict.Add(MouseButtons.Right, 0x0008);
@@ -58,31 +71,88 @@ namespace Ratatouille
             MouseUpButtonDict.Add(MouseButtons.Left, 0x0004);
             MouseUpButtonDict.Add(MouseButtons.Right, 0x00010);
 
+            MouseDownButtonDict.Add(MouseButtons.Middle, 0x0020);
+            MouseUpButtonDict.Add(MouseButtons.Middle, 0x0040);
+
             Timer mouseMovetimer = new System.Timers.Timer();
-            mouseMovetimer.Interval = 125;
+            mouseMovetimer.Interval = 50;
             mouseMovetimer.Elapsed += new ElapsedEventHandler(mouseMovetimer_Elapsed);
             mouseMovetimer.Start();
 
-        }
-        void mouseMovetimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            _moveReady = true;
         }
 
         private void ClientControlForm_Load(object sender, EventArgs e)
         {
             clientScreenPbox.SizeMode = PictureBoxSizeMode.StretchImage;
-            lh.KP += (sd, ev) => OnK(ev, 0);
-            lh.KC += (sd, ev) => OnK(ev, 2);
-        }
-        void OnK(Keys e, int p)
-        {
-            MySession.Send(MakePacket.S_Keyboard((byte)p, (byte)e));
         }
 
+        public void FormFocus()
+        {
+            //foreach(var session in ClientSessionManager.Instance._sessions)
+            //{
+            //    if (session.Key == MySession.SessionId) continue;
+            //    session.Value.MyClientControlForm.ClientControlForm_Deactivate(null, null);
+            //}
+            if (Program.OnNewFocus != null) Program.OnNewFocus.Invoke(null, null);
+
+            _isFocus = true;
+            if (titleLabel.InvokeRequired)
+            {
+                titleLabel.Invoke(new MethodInvoker(delegate ()
+                {
+                    titleLabel.Text = "FOCUS";
+                }));
+            }
+            else
+            {
+                titleLabel.Text = "FOCUS";
+            }
+            BackColor = Color.Crimson;
+
+            MySession.Send(MakePacket.S_SendScreenSleep(Convert.ToUInt32(sendSleepTbox.Text)));
+
+            Program.OnKey -= OnK;
+            Program.OnKey += OnK;
+            Program.OnNewFocus -= ClientControlForm_Deactivate;
+            Program.OnNewFocus += ClientControlForm_Deactivate;
+        }
+
+        public void ClientControlForm_Deactivate(object sender, EventArgs e)
+        {
+            MySession.Send(MakePacket.S_SendScreenSleep(300));
+            _isFocus = false;
+            if (titleLabel.InvokeRequired)
+            {
+                titleLabel.Invoke(new MethodInvoker(delegate ()
+                {
+                    titleLabel.Text = "UNFOCUS";
+                }));
+            }
+            else
+            {
+                titleLabel.Text = "UNFOCUS";
+            }
+            BackColor = Color.CornflowerBlue;
+            Program.OnKey -= OnK;
+            Program.OnNewFocus -= ClientControlForm_Deactivate;
+        }
+
+        void mouseMovetimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            _moveReady = true;
+        }
+
+
+
+        private void clientScreenPbox_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (clientScreenPbox.Image == null || !_isFocus || !_sizeSet) return;
+            short line = e.Delta > 0 ? (short)120 : (short)-120;
+            MySession.Send(MakePacket.S_MouseClick((uint)0x0800 , line));
+        }
         private void clientScreenPbox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (clientScreenPbox.Image == null || _moveReady == false) return;
+            if (_moveReady == false || !_isFocus || !_sizeSet) return;
             float posX = e.X * ((float)clientScreenPbox.Image.Size.Width / (float)clientScreenPbox.Size.Width);
             float posY = e.Y * ((float)clientScreenPbox.Image.Size.Height / (float)clientScreenPbox.Size.Height);
             MySession.Send(MakePacket.S_MouseMove((short)posX, (short)posY));
@@ -90,27 +160,33 @@ namespace Ratatouille
         }
         private void clientScreenPbox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (clientScreenPbox.Image == null) return;
+            if (clientScreenPbox.Image == null || !_isFocus || !_sizeSet) return;
             MySession.Send(MakePacket.S_MouseClick(MouseDownButtonDict[e.Button]));
         }
         private void clientScreenPbox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (clientScreenPbox.Image == null) return;
+            if (clientScreenPbox.Image == null || !_isFocus || !_sizeSet) return;
             MySession.Send(MakePacket.S_MouseClick(MouseUpButtonDict[e.Button]));
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            clientScreenPbox.Focus();
+            if (!_isTBoxTyping) clientScreenPbox.Focus();
+
             return false;
         }
-        private void clientScreenPbox_event_KeyDown(object sender , KeyEventArgs e)
+
+        void OnK(Keys e, int p)
         {
-            MySession.Send(MakePacket.S_Keyboard(0x00, (byte)e.KeyCode));
+            if (_isTBoxTyping || e == Keys.Pause || !_isFocus) return;
+            MySession.Send(MakePacket.S_Keyboard((byte)p, (byte)e));
         }
-        private void clientScreenPbox_event_KeyUp(object sender, KeyEventArgs e)
-        {
-            MySession.Send(MakePacket.S_Keyboard(0x02, (byte)e.KeyCode));
-        }
+
+
+
+
+
+
+
 
 
         #region UI EventHandler
@@ -152,7 +228,10 @@ namespace Ratatouille
         #endregion
 
 
-
+        private void topBarPanel_Click(object sender, EventArgs e)
+        {
+            FormFocus();
+        }
         private void topBarPanel_DoubleClick(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Maximized) this.WindowState = FormWindowState.Normal;
@@ -182,14 +261,26 @@ namespace Ratatouille
             mov = false;
         }
 
-        private void ClientControlForm_Activated(object sender, EventArgs e)
+        
+
+        private void sendSleepBtn_Click(object sender, EventArgs e)
         {
-            lh.HookKeyboard();
+            MySession.Send(MakePacket.S_SendScreenSleep(Convert.ToUInt32(sendSleepTbox.Text)));
         }
 
-        private void ClientControlForm_Deactivate(object sender, EventArgs e)
+        private void sendSleepTbox_Enter(object sender, EventArgs e)
         {
-            lh.UnHookKeyboard();
+            _isTBoxTyping = true;
+        }
+
+        private void sendSleepTbox_Leave(object sender, EventArgs e)
+        {
+            _isTBoxTyping = false;
+        }
+
+        private void clientScreenPbox_Click(object sender, EventArgs e)
+        {
+            FormFocus();
         }
     }
 }

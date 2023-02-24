@@ -55,10 +55,11 @@ public static class MakePacket
         return segment;
     }
 
-    public static ArraySegment<byte> S_MouseClick(uint flag)
+    public static ArraySegment<byte> S_MouseClick(uint flag , short line = 0)
     {
         S_MouseClick packet = new S_MouseClick();
         packet.flag = flag;
+        packet.line = line;
         ArraySegment<byte> segment = packet.Write();
         return segment;
     }
@@ -68,6 +69,13 @@ public static class MakePacket
         S_Keyboard packet = new S_Keyboard();
         packet.flag = flag;
         packet.keycode = keycode;
+        ArraySegment<byte> segment = packet.Write();
+        return segment;
+    }
+    public static ArraySegment<byte> S_SendScreenSleep(uint sleepAmount)
+    {
+        S_SendScreenSleep packet = new S_SendScreenSleep();
+        packet.sleepAmount = sleepAmount;
         ArraySegment<byte> segment = packet.Write();
         return segment;
     }

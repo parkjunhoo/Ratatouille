@@ -28,6 +28,8 @@ class ClientPacketManager
 		_handler.Add((ushort)PacketID.S_MouseClick, PacketHandler.S_MouseClickHandler);
 		_onRecv.Add((ushort)PacketID.S_Keyboard, MakePacket<S_Keyboard>);
 		_handler.Add((ushort)PacketID.S_Keyboard, PacketHandler.S_KeyboardHandler);
+		_onRecv.Add((ushort)PacketID.S_SendScreenSleep, MakePacket<S_SendScreenSleep>);
+		_handler.Add((ushort)PacketID.S_SendScreenSleep, PacketHandler.S_SendScreenSleepHandler);
 
 	}
 

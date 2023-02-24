@@ -16,7 +16,7 @@ namespace PacketGenerator
 
         static void Main(string[] args)
         {
-            string pdlPath = "../PDL.xml";
+            string pdlPath = "../../PDL.xml";
 
             XmlReaderSettings settings = new XmlReaderSettings()
             {

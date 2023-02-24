@@ -3,6 +3,7 @@ using ServerCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -203,6 +204,38 @@ public static class Util
 
 
 
+    public static byte[] Compress(byte[] data)
+    {
+        using (MemoryStream output = new MemoryStream())
+        {
+            using (GZipStream gzip = new GZipStream(output, CompressionMode.Compress))
+            {
+                gzip.Write(data, 0, data.Length);
+            }
+            return output.ToArray();
+        }
+    }
+
+    public static byte[] Decompress(byte[] compressedData)
+    {
+        using (MemoryStream input = new MemoryStream(compressedData))
+        {
+            using (GZipStream gzip = new GZipStream(input, CompressionMode.Decompress))
+            {
+                using (MemoryStream output = new MemoryStream())
+                {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = gzip.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        output.Write(buffer, 0, bytesRead);
+                    }
+                    return output.ToArray();
+                }
+            }
+        }
+    }
+
     #region 이미지 관련
     public static byte[] ScreenToByte()
     {
@@ -221,7 +254,7 @@ public static class Util
         {
             image.Save(ms, ImageFormat.Jpeg);
             image.Dispose();
-            return ms.ToArray();
+            return Compress(ms.ToArray());
         }
     }
 

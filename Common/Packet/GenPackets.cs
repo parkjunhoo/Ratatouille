@@ -14,6 +14,7 @@ public enum PacketID
 	S_MouseMove = 6,
 	S_MouseClick = 7,
 	S_Keyboard = 8,
+	S_SendScreenSleep = 9,
 	
 }
 
@@ -281,6 +282,7 @@ class S_MouseMove : IPacket
 class S_MouseClick : IPacket
 {
 	public uint flag;
+	public short line;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_MouseClick; } }
 
@@ -293,6 +295,8 @@ class S_MouseClick : IPacket
 		count += sizeof(ushort);
 		this.flag = BitConverter.ToUInt32(s.Slice(count, s.Length - count));
 		count += sizeof(uint);
+		this.line = BitConverter.ToInt16(s.Slice(count, s.Length - count));
+		count += sizeof(short);
 	}
 
 	public ArraySegment<byte> Write()
@@ -308,6 +312,8 @@ class S_MouseClick : IPacket
 		count += sizeof(ushort);
 		success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), this.flag);
 		count += sizeof(uint);
+		success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), this.line);
+		count += sizeof(short);
 		success &= BitConverter.TryWriteBytes(s, count);
 		if (success == false)
 			return null;
@@ -350,6 +356,43 @@ class S_Keyboard : IPacket
 		count += sizeof(uint);
 		segment.Array[segment.Offset + count] = (byte)this.keycode;
 		count += sizeof(byte);
+		success &= BitConverter.TryWriteBytes(s, count);
+		if (success == false)
+			return null;
+		return SendBufferHelper.Close(count);
+	}
+}
+
+class S_SendScreenSleep : IPacket
+{
+	public uint sleepAmount;
+
+	public ushort Protocol { get { return (ushort)PacketID.S_SendScreenSleep; } }
+
+	public void Read(ArraySegment<byte> segment)
+	{
+		int count = 0;
+
+		ReadOnlySpan<byte> s = new ReadOnlySpan<byte>(segment.Array, segment.Offset, segment.Count);
+		count += sizeof(int);
+		count += sizeof(ushort);
+		this.sleepAmount = BitConverter.ToUInt32(s.Slice(count, s.Length - count));
+		count += sizeof(uint);
+	}
+
+	public ArraySegment<byte> Write()
+	{
+		ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+		int count = 0;
+		bool success = true;
+
+		Span<byte> s = new Span<byte>(segment.Array, segment.Offset, segment.Count);
+
+		count += sizeof(int);
+		success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), (ushort)PacketID.S_SendScreenSleep);
+		count += sizeof(ushort);
+		success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), this.sleepAmount);
+		count += sizeof(uint);
 		success &= BitConverter.TryWriteBytes(s, count);
 		if (success == false)
 			return null;

@@ -191,13 +191,13 @@ namespace Ratatouille
 
         public void RefreshConnectList()
         {
-            for (int i = 0; i < this.connectionListPanel.Controls.Count; i++)
+            while (this.connectionListPanel.Controls.Count > 0)
             {
                 if (this.connectionListPanel.InvokeRequired)
                 {
                     this.connectionListPanel.Invoke(new MethodInvoker(delegate ()
                     {
-                        connectionListPanel.Controls.RemoveAt(i);
+                        connectionListPanel.Controls.RemoveAt(0);
                     }));
                 }
             }

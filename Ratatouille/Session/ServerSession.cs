@@ -8,6 +8,19 @@ using Ratatouille;
 
 public class ServerSession : PacketSession
 {
+    uint _sendScreenSleep = 100;
+    public uint SendScreenSleep
+    {
+        get
+        {
+            return _sendScreenSleep;
+        }
+        set
+        {
+            _sendScreenSleep = value;
+        }
+    }
+
     int _sessionId = 0;
     public int SessionId
     {
@@ -31,9 +44,10 @@ public class ServerSession : PacketSession
     {
         while (_disconnected != 1)
         {
+            uint s = _sendScreenSleep;
             ArraySegment<byte> pkt = MakePacket.C_ScreenImage();
             Send(pkt);
-            Thread.Sleep(1);
+            Thread.Sleep((int)s);
         }
     }
 

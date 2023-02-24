@@ -1,8 +1,7 @@
 {
   "profiles": {
     "PacketGenerator": {
-      "commandName": "Project",
-      "workingDirectory": "C:\\Users\\hoo\\Desktop\\Ratatouille\\PacketGenerator\\bin"
+      "commandName": "Project"
     }
   }
 }

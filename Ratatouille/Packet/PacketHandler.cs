@@ -106,16 +106,21 @@ class PacketHandler
     {
         ClientSession cs = session as ClientSession;
         C_ScreenImage p = packet as C_ScreenImage;
-        Image oldImage = cs.MyClientControlForm.clientScreenPbox.Image;
-        cs.MyClientControlForm.clientScreenPbox.Image = Util.ByteArrayToImage(p.bmp);
-        if (oldImage != null)
+
+        using (Image newImage = Util.ByteArrayToImage(Util.Decompress(p.bmp)))
         {
-            oldImage.Dispose();
+            cs.MyClientControlForm.Invoke(new Action(() =>
+            {
+                cs.MyClientControlForm.clientScreenPbox.Image?.Dispose();
+                cs.MyClientControlForm.clientScreenPbox.Image = (Image)newImage.Clone();
+                if (newImage.Width != cs.MyClientControlForm.ImageWidth) cs.MyClientControlForm.SetImageSize(newImage.Width, newImage.Height);
+            }));
         }
     }
 
     [DllImport("user32.dll")]
     static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
+    
 
     [DllImport("user32.dll")]
     public static extern void keybd_event(uint vk, uint scan, uint flags, uint extraInfo);
@@ -128,13 +133,18 @@ class PacketHandler
     public static void S_MouseClickHandler(PacketSession session, IPacket packet)
     {
         S_MouseClick pkt = packet as S_MouseClick;
-        mouse_event(pkt.flag, 0, 0, 0, 0);
+        mouse_event(pkt.flag, 0, 0, (uint)pkt.line, 0);
     }
 
     public static void S_KeyboardHandler(PacketSession session, IPacket packet)
     {
         S_Keyboard pkt = packet as S_Keyboard;
         keybd_event(pkt.keycode,0, pkt.flag , 0);
-
+    }
+    public static void S_SendScreenSleepHandler(PacketSession session, IPacket packet)
+    {
+        S_SendScreenSleep pkt = packet as S_SendScreenSleep;
+        ServerSession s = session as ServerSession;
+        s.SendScreenSleep = pkt.sleepAmount;
     }
 }
