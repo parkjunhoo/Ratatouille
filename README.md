@@ -19,22 +19,4 @@ https://youtu.be/dAXQWAtNCsQ
 ![실행화면2](https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f)
 
 
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![1]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg](https://user-images.githubusercontent.com/56852562/258001838-d2c925ad-e257-4a07-b34d-cc05da712e80.jpg))
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
-
-![0]([https://github.com/parkjunhoo/Ratatouille/assets/56852562/30cf70c1-1985-4fbc-8ed9-2b4a838c4c4f](https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg)
+<img src="https://user-images.githubusercontent.com/56852562/258001834-316704a7-5b81-48ef-8b4b-756fd27ae8bb.jpg">
