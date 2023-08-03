@@ -42,3 +42,13 @@ https://youtu.be/dAXQWAtNCsQ
 <img src="https://user-images.githubusercontent.com/56852562/258001857-bb526a4a-fa6e-423e-bc46-fe221b8e38b4.jpg">
 
 <img src="https://user-images.githubusercontent.com/56852562/258001859-8a71324d-a643-4331-9acd-8058bcf59ab9.jpg">
+
+
+
+
+
+### 아쉬운점 
+
+클라이언트 화면 공유에 사용되는 이미지 크기가 커서 통신이 원할하지 못했었는데
+gZIP 압축을 사용하여 통신해서 어느정도 실제로 사용할 수 있을 정도로 최적화가 되었습니다.
+나중에 더 공부해서 조금 더 최적화되고 멀티쓰레딩 환경에서 안정된 프로그램을 만들 수 있으면 좋겠습니다.
